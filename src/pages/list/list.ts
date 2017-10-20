@@ -36,7 +36,7 @@ export class ListPage {
     private store: LocalstorageService,
     private gitHubService : GithubService
   ) {
-    let user = store.get('user')
+    let user = this.store.get('user')
     this.gitHubService
       .getUserRepo(user.login)
       .then(res =>{

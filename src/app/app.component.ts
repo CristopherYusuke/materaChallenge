@@ -41,7 +41,7 @@ export class MyApp {
       { title: 'Busca Usuario', component: HomeIonicPage, isValid:()=> true },
       { title: 'Detalhes Usuario', component: UserDetailsPage, isValid:() => this.hasUser() },
       { title: 'Lista Repositorio', component: ListPage, isValid:() => this.hasUser() },
-      { title: 'Repositorio com mais estrela', component: RepoDetailsPage, isValid:() => this.hasUser(),paramns:this.getRepoStarts() }
+      { title: 'Repositorio com mais estrela', component: RepoDetailsPage, isValid:() => this.hasUser(),paramns: comp => this.getRepoStarts(comp) }
     ];
   }
 
@@ -54,11 +54,14 @@ export class MyApp {
 
     return user
   }
-  getRepoStarts () {
+  getRepoStarts (component) {
     let user = this.store.get('user')
     return this.GithubService
       .getUserRepo(user.login)
-      .then(res => res.sort((a,b)=> b.stargazers_count - a.stargazers_count)[0])
+      .then(res => {
+        let repo = res.sort((a,b)=> b.stargazers_count - a.stargazers_count)[0]
+        this.nav.setRoot(component, {repo});
+      })
   }
 
   initializeApp() {
@@ -80,11 +83,7 @@ export class MyApp {
     this.menu.close();
     if(page.isValid()){
       if(page.paramns){
-        page
-          .paramns
-          .then(paramns =>{
-            this.nav.setRoot(page.component, { repo:paramns});
-          })
+        page.paramns(page.component)
       }else{
         this.nav.setRoot(page.component);
       } 

@@ -12,7 +12,7 @@ import { LocalstorageService } from '../../service/localstorage.service';
 })
 export class HomeIonicPage {
 
-  username: String = "cristopheryusuke";
+  username: String;
 
   constructor(
     private gitHubService: GithubService,

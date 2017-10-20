@@ -17,6 +17,6 @@ export class UserDetailsPage {
     public navParams: NavParams,
     private store: LocalstorageService
     ) {
-    this.githubUser = store.get('user');
+    this.githubUser = this.store.get('user');
   }
 }
