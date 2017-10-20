@@ -25511,3 +25511,18 @@ ion-navbar.toolbar {
   height: calc(46px + constant(safe-area-inset-top));
   min-height: calc(46px + constant(safe-area-inset-top));
 }
+
+page-user-details img {
+  width: 100%;
+  border-radius: 100%;
+  display: inline-block;
+}
+
+page-user-details ion-thumbnail {
+  width: 200px;
+  margin: 0 auto;
+}
+
+page-user-details ion-thumbnail p {
+  font-size: 20px;
+}

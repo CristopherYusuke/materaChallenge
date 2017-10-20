@@ -1,18 +1,69 @@
+
+
 <ion-header>
   <ion-navbar>
-    <button menuToggle *ngIf="!selectedItem">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Item Details</ion-title>
+    <ion-title>Perfil</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <h3 text-center *ngIf="selectedItem">
-    {{selectedItem.title}}
-    <ion-icon [name]="selectedItem.icon"></ion-icon>
-  </h3>
-  <h4 text-center *ngIf="selectedItem">
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </h4>
+<ion-content padding>
+  <ion-card>
+    <ion-item>
+      <ion-avatar item-start>
+        <img [src]="githubUser.avatar_url">
+      </ion-avatar>
+      <h2>{{githubUser.name}}</h2>
+      <p>{{githubUser.bio}}</p>
+    </ion-item>
+    
+    <ion-item *ngIf="githubUser.email">
+        <ion-icon name="mail" item-left large  ></ion-icon>
+        <h2>{{githubUser.email}}</h2>
+      </ion-item>
+    <ion-item>
+      <ion-icon name="people" item-left large  ></ion-icon>
+      <h2>{{githubUser.followers}}</h2>
+      <p>Seguidores</p>
+    </ion-item>
+  
+    <ion-item>
+      <ion-icon name="people" item-left large ></ion-icon>
+      <h2>{{githubUser.following}}</h2>
+      <p>Seguindo</p>
+    </ion-item>
+  </ion-card>
+
 </ion-content>
+<!-- {
+  "login": "CristopherYusuke",
+  "id": 4607332,
+  "avatar_url": "https://avatars0.githubusercontent.com/u/4607332?v=4",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/CristopherYusuke",
+  "html_url": "https://github.com/CristopherYusuke",
+  "followers_url": "https://api.github.com/users/CristopherYusuke/followers",
+  "following_url": "https://api.github.com/users/CristopherYusuke/following{/other_user}",
+  "gists_url": "https://api.github.com/users/CristopherYusuke/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/CristopherYusuke/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/CristopherYusuke/subscriptions",
+  "organizations_url": "https://api.github.com/users/CristopherYusuke/orgs",
+  "repos_url": "https://api.github.com/users/CristopherYusuke/repos",
+  "events_url": "https://api.github.com/users/CristopherYusuke/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/CristopherYusuke/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": "Cristopher",
+  "company": null,
+  "blog": "",
+  "location": "Brasil ",
+  "email": null,
+  "hireable": null,
+  "bio": "Front-end engineer\r\n",
+  "public_repos": 6,
+  "public_gists": 0,
+  "followers": 3,
+  "following": 3,
+  "created_at": "2013-06-04T04:11:44Z",
+  "updated_at": "2017-09-03T20:17:23Z"
+}
+ -->

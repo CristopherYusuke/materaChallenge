@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
 
-import { UserDetailsPage } from '../user-details/user-details';
+import { RepoDetailsPage } from '../repo-details/repo-details';
+
+import { GithubService } from '../../service/github.service';
+import { LocalstorageService } from '../../service/localstorage.service';
+
 
 @Component({
   selector: 'page-list',
@@ -10,23 +14,21 @@ import { UserDetailsPage } from '../user-details/user-details';
 })
 export class ListPage {
   icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  repos: Array<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for(let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private store: LocalstorageService,
+    private gitHubService : GithubService
+  ) {
+    let user = store.get('user')
+    this.gitHubService
+      .getUserRepo(user.login)
+      .then(res => this.repos = res)
   }
 
   itemTapped(event, item) {
-    this.navCtrl.push(UserDetailsPage, { item });
+    this.navCtrl.push(RepoDetailsPage, { item });
   }
 }

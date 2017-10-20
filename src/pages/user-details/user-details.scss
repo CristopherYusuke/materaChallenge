@@ -1,3 +1,16 @@
 page-user-details {
+    img {
+        width: 100%;
+        border-radius: 100%;
+        display: inline-block;
+    }
+    
+    ion-thumbnail {
+        width: 200px;
+        margin: 0 auto;
+        p{
+            font-size: 20px;
+        }
+    }
 
 }

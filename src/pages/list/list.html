@@ -9,11 +9,11 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon name="{{item.icon}}" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
+    
+    <button ion-item *ngFor="let repo of repos" (click)="itemTapped($event, repo)">
+      {{repo.name}}
+      <div class="repo-note" item-right>
+        {{repo.stargazers_count}}
       </div>
     </button>
   </ion-list>
