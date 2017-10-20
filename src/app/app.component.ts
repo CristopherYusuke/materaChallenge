@@ -4,9 +4,12 @@ import { Platform, MenuController, Nav ,AlertController} from 'ionic-angular';
 
 import { HomeIonicPage } from '../pages/home/home';
 import {  UserDetailsPage } from '../pages/user-details/user-details';
+import {  RepoDetailsPage } from '../pages/repo-details/repo-details';
+
 import { ListPage } from '../pages/list/list';
 
 import { LocalstorageService } from "../service/localstorage.service";
+import { GithubService } from "../service/github.service";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,7 +24,7 @@ export class MyApp {
 
   // make HomeIonicPage the root (or first) page
   rootPage = HomeIonicPage;
-  pages: Array<{title: string, component: any, isValid:object }>;
+  pages: Array<any>;
 
   constructor(
     public platform: Platform,
@@ -29,6 +32,7 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     private store : LocalstorageService,
+    private GithubService: GithubService,
     private alertCtrl : AlertController
   ) {
     this.initializeApp();
@@ -36,19 +40,25 @@ export class MyApp {
     this.pages = [
       { title: 'Busca Usuario', component: HomeIonicPage, isValid:()=> true },
       { title: 'Detalhes Usuario', component: UserDetailsPage, isValid:() => this.hasUser() },
-      { title: 'Lista Repositorio', component: ListPage, isValid:() => this.hasUser() }
+      { title: 'Lista Repositorio', component: ListPage, isValid:() => this.hasUser() },
+      { title: 'Repositorio com mais estrela', component: RepoDetailsPage, isValid:() => this.hasUser(),paramns:this.getRepoStarts() }
     ];
   }
 
   hasUser ():boolean {
-    console.log(this.store);
-    
+        
     let user = !!this.store.get('user')
     if(!user){
       this.showAlert({title:"Usuario não buscado",subTitle:"Favor buscar usuario na pagina principal"})
     }
 
     return user
+  }
+  getRepoStarts () {
+    let user = this.store.get('user')
+    return this.GithubService
+      .getUserRepo(user.login)
+      .then(res => res.sort((a,b)=> b.stargazers_count - a.stargazers_count)[0])
   }
 
   initializeApp() {
@@ -69,7 +79,16 @@ export class MyApp {
   openPage(page) {
     this.menu.close();
     if(page.isValid()){
-      this.nav.setRoot(page.component);
+      if(page.paramns){
+        page
+          .paramns
+          .then(paramns =>{
+            this.nav.setRoot(page.component, { repo:paramns});
+          })
+      }else{
+        this.nav.setRoot(page.component);
+      } 
+      
     }
   }
 }

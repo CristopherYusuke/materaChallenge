@@ -25512,6 +25512,10 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-top));
 }
 
+page-list button {
+  float: right;
+}
+
 page-user-details img {
   width: 100%;
   border-radius: 100%;
